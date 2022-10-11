@@ -1,0 +1,30 @@
+---
+import { useStoryblokApi } from '@storyblok/astro'
+
+const storyblokApi = useStoryblokApi()
+const { data } = await storyblokApi.get('cdn/stories', {
+  version: import.meta.env.DEV ? "draft" : "published",
+  content_type: 'blogpost',
+})
+
+const posts = data.stories.map(story => {
+  return {
+    title: story.content.title,
+    date: new Date(story.published_at).toLocaleDateString(),
+    description: story.content.description,
+    slug: story.full_slug,
+  }
+})
+
+
+const { blok } = Astro.props
+---
+<h1 class="text-4xl font-bold mb-8">My blog</h1>
+<ul>
+  {posts.map(post => (
+    <li class="border border-gray-500 p-6 rounded-lg flex flex-col gap-1">
+      <time class="text-xs text-gray-500" datetime={post.date}>{new Date(post.date).toLocaleDateString("en-US", {dateStyle: "full",})}</time>
+      <h2 class="font-semibold text-xl"><a href={post.slug}>{post.title}</a></h2>
+      <p>{post.description}</p>
+    </li>))}
+</ul>
