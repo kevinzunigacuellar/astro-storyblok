@@ -5,29 +5,22 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 
 export async function getStaticPaths() {
   const storyblokApi = useStoryblokApi()
-
-  const { data } = await storyblokApi.get("cdn/links")
-  let links = data.links
-  links = Object.values(links)
-
-  return links.map((link) => {
+  const { data } = await storyblokApi.get("cdn/stories");
+  const pages = data.stories.map(story => {
     return {
-      params: { slug: link.slug },
+      params: {
+        slug: story.slug === 'index' ? undefined : story.slug
+      },
+      props: {
+        content: story.content
+      }
     }
   })
+  return pages
 }
-
-const { slug } = Astro.params
-
-const storyblokApi = useStoryblokApi()
-
-const { data } = await storyblokApi.get(`cdn/stories/${slug}`, {
-  version: 'draft',
-})
-
-const story = data.story
+const { content } = Astro.props
 ---
 
 <BaseLayout>
-  <StoryblokComponent blok={story.content} />
+  <StoryblokComponent blok={content} />
 </BaseLayout>
