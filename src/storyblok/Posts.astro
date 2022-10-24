@@ -19,12 +19,12 @@ const posts = data.stories.map(story => {
 
 const { blok } = Astro.props
 ---
-<h1 class="text-4xl font-bold mb-8">My blog</h1>
-<ul>
+<h1 class="text-4xl font-bold">My blog</h1>
+<ul class="p-0">
   {posts.map(post => (
     <li class="border border-gray-500 p-6 rounded-lg flex flex-col gap-1">
       <time class="text-xs text-gray-500" datetime={post.date}>{new Date(post.date).toLocaleDateString("en-US", {dateStyle: "full",})}</time>
-      <h2 class="font-semibold text-xl"><a href={post.slug}>{post.title}</a></h2>
-      <p>{post.description}</p>
+      <h2 class="font-semibold text-xl m-0"><a href={post.slug}>{post.title}</a></h2>
+      <p class="m-0">{post.description}</p>
     </li>))}
 </ul>
