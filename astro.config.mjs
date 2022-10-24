@@ -12,6 +12,7 @@ export default defineConfig({
         page: 'storyblok/Page',
         blogpost: 'storyblok/BlogPost',
         preview_post: 'storyblok/Posts',
+        about_section: 'storyblok/AboutSection',
       },
       apiOptions: {
         region: 'us',
