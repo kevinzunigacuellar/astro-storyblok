@@ -3,27 +3,17 @@ import { useStoryblokApi } from '@storyblok/astro'
 import StoryblokComponent from '@storyblok/astro/StoryblokComponent.astro'
 import BaseLayout from '../layouts/BaseLayout.astro'
 
-export async function getStaticPaths() {
-  const storyblokApi = useStoryblokApi()
-  const { data } = await storyblokApi.get("cdn/stories", {
-    // allows to see non-publised data in dev mode but not at build
-    version: import.meta.env.DEV ? "draft" : "published",
-  });
-  const pages = data.stories.map(story => {
-    return {
-      params: {
-        slug: story.full_slug === 'index' ? undefined : story.full_slug
-      },
-      props: {
-        content: story.content
-      }
-    }
-  })
-  return pages
+let content;
+const storyblokApi = useStoryblokApi()
+let { slug } = Astro.params
+slug = slug === undefined ? "index" : slug
+try {
+  const { data } = await storyblokApi.get(`cdn/stories/${slug}`)
+  content = data.story.content
+} catch (error) {
+  Astro.redirect('/404')
 }
-const { content } = Astro.props
 ---
-
 <BaseLayout>
   <StoryblokComponent blok={content} />
 </BaseLayout>

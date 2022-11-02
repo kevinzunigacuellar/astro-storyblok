@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@astrojs/tailwind": "2.1.1",
+    "@astrojs/vercel": "^2.3.3",
     "@storyblok/astro": "1.1.1",
     "astro": "1.5.2",
     "axios": "^0.27.2"
