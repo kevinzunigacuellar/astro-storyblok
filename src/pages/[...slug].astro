@@ -11,7 +11,7 @@ try {
   const { data } = await storyblokApi.get(`cdn/stories/${slug}`)
   content = data.story.content
 } catch (error) {
-  Astro.redirect('/404')
+  return Astro.redirect('/404')
 }
 ---
 <BaseLayout>

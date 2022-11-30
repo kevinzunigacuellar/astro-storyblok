@@ -6,7 +6,7 @@ import vercel from '@astrojs/vercel/serverless'
 // https://astro.build/config
 export default defineConfig({
   integrations: [storyblok({
-    accessToken: 'Th4BbSEt49KDfg5mFIsylwtt',
+    accessToken: '9aAbQxfwe7F9SH5LvZXTNQtt',
     components: {
       page: 'storyblok/Page',
       blogpost: 'storyblok/BlogPost',
